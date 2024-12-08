@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home Page</title>
+    <!-- Other head elements -->
+    <link rel="stylesheet" type="text/css" href="/css/HomeStyle.css">
+</head>
+<body>
+<h1>Welcome, <span th:text="${email}"></span>!</h1>
+
+<!-- Or using a link to logout -->
+<a href="/logout">Logout</a>
+<nav>
+    <span>Expense Manager</span>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+    <button onclick="openModal()">Add Expense</button>
+    <input type="text" placeholder="Search..." style="float: right;">
+    <select style="float: right;">
+        <option value="default">Sort</option>
+        <!-- Add sorting options -->
+    </select>
+
+
+        <!-- Display expenses here -->
+        <table>
+            <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td th:text="${expense.id}"></td>
+                <td th:text="${expense.itemName}"></td>
+                <td th:text="${expense.amount}"></td>
+                <td th:text="${expense.expenseDate}"></td>
+                <td th:text="${expense.category}"></td>
+                <!-- Action buttons for edit/delete -->
+                <td>
+                    <!-- Add your edit/delete buttons or actions here -->
+                </td>
+            </tr>
+            </tbody>
+    </table>
+</div>
+
+<!-- Modal for adding expense -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Add Expense</h2>
+        <form action="/additem" method="post">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" name="itemName"><br><br>
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount"><br><br>
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="food">Food</option>
+                <option value="travel">Travel</option>
+                <option value="shopping">Shopping</option>
+                <option value="health">Health</option>
+            </select><br><br>
+
+            <label for="expenseDate">Expense Date:</label>
+            <input type="date" id="expenseDate" name="expenseDate" value="2023-11-19"><br><br>
+
+            <button type="submit" value="submit">Save</button>
+            <button type="button" onclick="closeModal()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById('myModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
